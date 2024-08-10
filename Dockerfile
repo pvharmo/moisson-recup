@@ -1,5 +1,5 @@
 FROM alpine:latest as downloader
-ARG VERSION=0.22.12
+ARG VERSION=0.22.18
 ARG ARCH=linux_amd64
 RUN wget https://github.com/pocketbase/pocketbase/releases/download/v${VERSION}/pocketbase_${VERSION}_${ARCH}.zip \
     && unzip pocketbase_${VERSION}_${ARCH}.zip -d /tmp/ \

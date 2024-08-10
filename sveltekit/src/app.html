@@ -5,8 +5,31 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
+
+		<!-- <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css"> -->
+		<!-- <link href="./dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
+        <link href="./dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
+        <link href="./dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
+        <link href="./dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
+        <link href="./dist/css/demo.min.css?1692870487" rel="stylesheet"/>
+
+		<style>
+        @import url('https://rsms.me/inter/inter.css');
+        :root {
+           	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+        }
+        body {
+           	font-feature-settings: "cv03", "cv04", "cv11";
+        }
+        </style> -->
+
 	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+	<body data-sveltekit-preload-data="hover" class="bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 antialiased">
+	    <div id="svelte" class="max-h-screen overflow-auto relative w-full">%sveltekit.body%</div>
 	</body>
 </html>
+
+<!-- <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+<script src="./dist/js/tabler.min.js?1692870487" defer></script>
+<script src="./dist/js/demo.min.js?1692870487" defer></script> -->
