@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PocketBase repository
-        uses: actions/checkout@v2
-        with:
-          repository: 'pocketbase/pocketbase'
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v4
+        with: 
+          sparse-checkout: |
+            pocketbase-version.txt
 
       - name: Get latest release version
         id: get-latest-version
