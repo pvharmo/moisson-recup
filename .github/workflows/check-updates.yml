@@ -14,6 +14,7 @@ jobs:
         with: 
           sparse-checkout: |
             pocketbase-version.txt
+            .github/workflows/build.yml
 
       - name: Get latest release version
         id: get-latest-version
