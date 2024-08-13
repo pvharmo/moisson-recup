@@ -22,24 +22,24 @@ jobs:
             https://api.github.com/repos/pocketbase/pocketbase/releases/latest \
             | jq -r '.tag_name')
           echo "Latest version: $latest_version"
-          echo "::set-output name=latest_version::$latest_version"
+          echo "latest_version=$latest_version" >> $GITHUB_OUTPUT
 
       - name: Get current version
         id: get-current-version
         run: |
           current_version=$(cat pocketbase-version.txt)
           echo "Current version: $current_version"
-          echo "::set-output name=current_version::$current_version"
+          echo "current_version=$current_version" >> $GITHUB_OUTPUT
 
       - name: Compare versions
         id: compare-versions
         run: |
-          if [ "${get-latest-version.outputs.latest_version}"!= "${get-current-version.outputs.current_version}" ]; then
-            echo "New version available: ${get-latest-version.outputs.latest_version}"
-            echo "::set-output name=new_version_available::true"
+          if [ "${{ steps.get-latest-version.outputs.latest_version }}" != "${{ steps.get-current-version.outputs.current_version }}" ]; then
+            echo "New version available: ${{ steps.get-latest-version.outputs.latest_version }}"
+            echo "new_version_available=true" >> $GITHUB_OUTPUT
           else
             echo "No new version available"
-            echo "::set-output name=new_version_available::false"
+            echo "new_version_available=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Trigger build workflow if new version available
