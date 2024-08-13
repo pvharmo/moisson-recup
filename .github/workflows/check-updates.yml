@@ -42,12 +42,6 @@ jobs:
             echo "new_version_available=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Trigger build workflow if new version available
-        if: steps.compare-versions.outputs.new_version_available == 'true'
-        uses: ./.github/workflows/build.yml
-        with:
-          latest_version: ${{ steps.get-latest-version.outputs.latest_version }}
-
   build:
     uses: ./.github/workflows/build.yml
     needs: check-update
