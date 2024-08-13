@@ -1,0 +1,49 @@
+name: Check for PocketBase updates
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # runs daily at midnight
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PocketBase repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'pocketbase/pocketbase'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get latest release version
+        id: get-latest-version
+        run: |
+          latest_version=$(curl -s -X GET \
+            https://api.github.com/repos/pocketbase/pocketbase/releases/latest \
+            | jq -r '.tag_name')
+          echo "Latest version: $latest_version"
+          echo "::set-output name=latest_version::$latest_version"
+
+      - name: Get current version
+        id: get-current-version
+        run: |
+          current_version=$(cat pocketbase-version.txt)
+          echo "Current version: $current_version"
+          echo "::set-output name=current_version::$current_version"
+
+      - name: Compare versions
+        id: compare-versions
+        run: |
+          if [ "${get-latest-version.outputs.latest_version}"!= "${get-current-version.outputs.current_version}" ]; then
+            echo "New version available: ${get-latest-version.outputs.latest_version}"
+            echo "::set-output name=new_version_available::true"
+          else
+            echo "No new version available"
+            echo "::set-output name=new_version_available::false"
+          fi
+
+      - name: Trigger build workflow if new version available
+        if: steps.compare-versions.outputs.new_version_available == 'true'
+        uses: ./.github/workflows/build-docker-image.yml
+        with:
+          latest_version: ${{ steps.get-latest-version.outputs.latest_version }}

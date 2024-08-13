@@ -3,9 +3,17 @@ run-name: Build v${{ github.run_number }}
 
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      latest_version:
+        description: 'The latest version of PocketBase'
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
+  POCKETBASE_VERSION: ${{ inputs.latest_version }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-image:
@@ -26,9 +34,18 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           build-args: |
+            POCKETBASE_VERSION=${{ env.POCKETBASE_VERSION }}
             GITHUB_TOKEN=${{ secrets.ORG_GITHUB_TOKEN }}
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ github.run_number }}-${{ env.POCKETBASE_VERSION }}
+      - name: Update pocketbase-version.txt
+        run: |
+          echo "${POCKETBASE_VERSION}" > pocketbase-version.txt
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pocketbase-version.txt
+          git commit -m "Update pocketbase-version.txt to ${POCKETBASE_VERSION}"
+          git push origin main
       - name: Create a tag
         uses: actions/github-script@v7
         with:
@@ -36,6 +53,6 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/v${{ github.run_number }}',
+              ref: 'refs/tags/v${{ env.POCKETBASE_VERSION }}',
               sha: context.sha
             })
