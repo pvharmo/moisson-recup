@@ -11,10 +11,6 @@ jobs:
     steps:
       - name: Checkout PocketBase repository
         uses: actions/checkout@v4
-        with: 
-          sparse-checkout: |
-            pocketbase-version.txt
-            .github/workflows/build.yml
 
       - name: Get latest release version
         id: get-latest-version
