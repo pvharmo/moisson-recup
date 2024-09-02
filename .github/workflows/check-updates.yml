@@ -34,7 +34,7 @@ jobs:
       - name: Compare versions
         id: compare-versions
         run: |
-          if [ "${{ steps.get-latest-version.outputs.latest_version }}" != "${{ steps.get-current-version.outputs.current_version }}" ]; then
+          if [ "${{ steps.get-latest-version.outputs.latest_version }}" != "${{ steps.get-current-version.outputs.current_version }}" ] && [ "${{ steps.get-latest-version.outputs.latest_version }}" != *rc ]; then
             echo "New version available: ${{ steps.get-latest-version.outputs.latest_version }}"
             echo "new_version_available=true" >> $GITHUB_OUTPUT
           else
