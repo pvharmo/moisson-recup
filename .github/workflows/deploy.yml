@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Backup the volume and wait to make sure snapshot is complete
-        run: flyctl volumes snapshot create ${{ env.FLY_VOLUME_ID }} && sleep 20
+        run: flyctl volumes snapshot create ${{ secrets.FLY_VOLUME_ID }} && sleep 20
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_DEPLOY_API_TOKEN }}
       - name: Deploy the app
