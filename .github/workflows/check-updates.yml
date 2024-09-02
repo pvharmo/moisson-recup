@@ -2,8 +2,7 @@ name: Check for PocketBase updates
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *' # runs daily at midnight
+  workflow_call:
 
 jobs:
   check-update:
