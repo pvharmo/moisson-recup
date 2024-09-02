@@ -9,3 +9,9 @@ updates:
     directory: "/sveltekit/" # Location of package manifests
     schedule:
       interval: "monthly"
+    groups:
+      minor-updates:
+        applies-to: version-updates
+        update-types:
+        - "minor"
+        - "patch"
