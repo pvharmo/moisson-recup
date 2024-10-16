@@ -55,7 +55,7 @@
             <!-- <img class="w-8 h-8 mr-2" src="/images/logo.svg" alt="logo" /> -->
             Moisson Mitis
         </svelte:fragment>
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8 max-w-md mx-auto">
             <form class="flex flex-col space-y-6" method="POST" use:enhance={LoginAction}>
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Connexion</h3>
                 <Label class="space-y-2">
