@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-    update:
-        uses: ./.github/workflows/check-updates.yml
-        
-    deploy:
-        uses: ./.github/workflows/deploy.yml
-        needs: update
+  update:
+    uses: ./.github/workflows/check-updates.yml
+      
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    needs: update
+    secrets: inherit
